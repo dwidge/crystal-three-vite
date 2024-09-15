@@ -9,16 +9,25 @@ function App() {
   const [timeoutId, setTimeoutId] = useState<ReturnType<
     typeof setTimeout
   > | null>(null);
+  const lastTime = useRef<number | null>(null);
 
-  const animate = () => {
-    if (rotationSpeed.current > 0) {
-      setRotation([0, Date.now() * 0.001 * rotationSpeed.current, 0]);
+  const animate = (time: number) => {
+    if (lastTime.current !== null) {
+      const delta = time - lastTime.current;
+      if (rotationSpeed.current > 0) {
+        setRotation((prev) => [
+          (prev as number[])[0],
+          (prev as number[])[1] + delta * 0.001 * rotationSpeed.current,
+          (prev as number[])[2],
+        ]);
+      }
     }
+    lastTime.current = time;
     requestAnimationFrame(animate);
   };
 
   useEffect(() => {
-    animate();
+    requestAnimationFrame(animate);
   }, []);
 
   const pauseRotation = () => {
