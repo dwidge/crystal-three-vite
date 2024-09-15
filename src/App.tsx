@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Canvas, Euler } from "@react-three/fiber";
 import { Box, OrbitControls } from "@react-three/drei";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
   const [rotation, setRotation] = useState<Euler>([0, 0, 0]);
   const rotationSpeed = useRef<number>(1);
   const [timeoutId, setTimeoutId] = useState<ReturnType<
@@ -40,17 +37,27 @@ function App() {
   };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div
+      style={{
+        display: "flex",
+        flex: 1,
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flex: 2,
+          alignItems: "center",
+          justifyContent: "center",
+          background: "grey",
+        }}
+      >
+        Hi
       </div>
-      <h1>Vite + React</h1>
-      <Canvas>
+      <Canvas style={{ flex: 1 }}>
         <ambientLight />
         <pointLight position={[10, 10, 10]} />
         <Box args={[1, 1, 1]} rotation={rotation}>
@@ -61,18 +68,7 @@ function App() {
           onEnd={resumeRotationAfterDelay}
         />
       </Canvas>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   );
 }
 
